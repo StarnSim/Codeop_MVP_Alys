@@ -17,7 +17,7 @@ router.get("/", async function (req, res) {
 router.get("/:id", async function (req, res) {
   try {
     const hobbyCats = await db(
-      "SELECT hobbies.*, events.event_name, event_description FROM hobbies LEFT JOIN events ON hobbies.id = events.hobby_id ORDER BY events.id;"
+      "SELECT hobbies.*, events.event_name, events.event_description FROM hobbies LEFT JOIN events ON hobbies.id = events.hobby_id ORDER BY events.id;"
     );
     res.send(hobbyCats.data);
   } catch (err) {
@@ -26,3 +26,16 @@ router.get("/:id", async function (req, res) {
 });
 
 module.exports = router;
+
+
+// router.get("/:id", async function (req, res) {
+//   try {
+//     const hobbyCats = await db(
+//       "SELECT hobbies.*, events.event_name, event_description FROM hobbies LEFT JOIN events ON hobbies.id = events.hobby_id ORDER BY events.id;"
+//     );
+//     res.send(hobbyCats.data);
+//   } catch (err) {
+//     res.status(500).send(err);
+//   }
+// });
+

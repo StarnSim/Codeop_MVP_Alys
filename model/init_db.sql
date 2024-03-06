@@ -1,6 +1,3 @@
-
--- Drop Tables
---
 SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE if exists events;
 DROP TABLE if exists user_faves;
@@ -8,9 +5,16 @@ DROP TABLE if exists hobbies;
 DROP TABLE if exists users;
 SET FOREIGN_KEY_CHECKS=1; 
 
---
--- Create Tables
---
+
+CREATE TABLE users(
+    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `username` VARCHAR(40) NOT NULL,
+    `password` VARCHAR(255) NOT NULL
+);
+CREATE TABLE `user_faves`(
+    `user_id` BIGINT UNSIGNED NOT NULL,
+    `event_id` BIGINT UNSIGNED NOT NULL
+);
 
 CREATE TABLE events(
     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -24,34 +28,23 @@ CREATE TABLE events(
     `skill_level` VARCHAR(40),
     `equip_needed` TINYINT(1)
 );
-CREATE TABLE users(
+CREATE TABLE `hobbies`(
     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `username` VARCHAR(40) NOT NULL
+    `description` LONGTEXT,
+    `hobby_category` TEXT NOT NULL
 );
-CREATE TABLE hobbies(
-    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `hobby_category` VARCHAR(255) NOT NULL,
-    `description` LONGTEXT
-);
-CREATE TABLE user_faves(
-    `user_id` BIGINT UNSIGNED NOT NULL,
-    `event_id` BIGINT UNSIGNED NOT NULL
-);
-
---CREATING TABLE RELATIONSHIPS--
-
-    CREATE INDEX `user_faves_user_id_index` ON `user_faves` (`user_id`);
-
-    CREATE INDEX `user_faves_event_id_index` ON `user_faves` (`event_id`);
+ALTER TABLE
+    `user_faves` ADD INDEX `user_faves_user_id_index`(`user_id`);
+ALTER TABLE
+    `user_faves` ADD INDEX `user_faves_event_id_index`(`event_id`);
 
 ALTER TABLE
     `user_faves` ADD CONSTRAINT `user_faves_user_id_foreign` FOREIGN KEY(`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE;
 ALTER TABLE
-    `events` ADD CONSTRAINT `events_hobby_id_foreign` FOREIGN KEY(`hobby_id`) REFERENCES `hobbies`(`id`) ON DELETE CASCADE;
-ALTER TABLE
     `user_faves` ADD CONSTRAINT `user_faves_event_id_foreign` FOREIGN KEY(`event_id`) REFERENCES `events`(`id`) ON DELETE CASCADE;
+ALTER TABLE
+    `events` ADD CONSTRAINT `events_hobby_id_foreign` FOREIGN KEY(`hobby_id`) REFERENCES `hobbies`(`id`) ON DELETE CASCADE;
 
---DATABASE INSERTIONS--
 INSERT INTO hobbies (hobby_category) VALUES ('Outdoor sports');
 INSERT INTO hobbies (hobby_category) VALUES ('Indoor sports');
 INSERT INTO hobbies (hobby_category) VALUES ('Food and Drink');
@@ -537,4 +530,5 @@ VALUES ('Improv group',
 'all-levels', 
 '0');
 
-INSERT INTO users (username) VALUES ('testUser');
+INSERT INTO users (username, password) VALUES ('testUser', 'testpassword');
+

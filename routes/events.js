@@ -46,6 +46,8 @@ const db = require("../model/helper");
             equip_needed,
             event_price,
            } = req.body;
+
+           const {user_id} = req;
             await db(
               `INSERT INTO events (event_name, event_location, event_description, skill_level, hobby_id, equip_needed, event_price) VALUES ("${event_name}", "${event_location}", "${event_description}", "${skill_level}", ${hobby_id}, ${equip_needed}, ${event_price});`
               );
@@ -56,3 +58,5 @@ const db = require("../model/helper");
 });
 
 module.exports = router;
+
+// Select * from events WHERE user Id = 1

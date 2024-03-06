@@ -12,9 +12,6 @@ export default function SearchForm() {
 //Shows all events and all hobbies (in it's dropdown) when the page is loaded
     useEffect(() => {
       getEvents();
-    }, []);
-
-    useEffect(() => {
       getHobbies();
     }, []);
 
@@ -58,8 +55,30 @@ export default function SearchForm() {
       getEvents();
     };
   
+      const saveEventToProfile = async (eventId) => {
+        try {
+          // Send a request to save the event to the user's profile
+          const response = await fetch("/api/profile/saved_events", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              authorization: "Bearer " + localStorage.getItem("token"),
+            },
+            body: JSON.stringify({ event_id: eventId }),
+          });
+    
+          if (response.ok) {
+            console.log(`Event with ID ${eventId} saved successfully.`);
+          } else {
+            console.error(`Failed to save event with ID ${eventId}.`);
+          }
+        } catch (error) {
+          console.error("Error saving event:", error);
+        }
+      };
+  
     return (
-      <div>
+      <div className="container px-10 mb-5 d-flex flex-column align-items-center justify-content-center">
         <h1> Search Form </h1>
         <form onSubmit={handleSubmit}>
           <div>
@@ -177,16 +196,16 @@ export default function SearchForm() {
         </form>
 
         <div className="row mb-4">
-        {events.map((event) => (
-          <div key={event.id} className="container rounded p-5 my-5 bg col-4 mb-4">
-            <h2>{event.event_name}</h2>
-            <p>{event.event_description}</p>
-            <p>{event.event_location}</p>
-            <p>€{event.event_price}</p>
-          </div>
-        ))}
-      </div>
-      </div>
-
+      {events.map((event) => (
+        <div key={event.id} className="container rounded p-5 my-5 bg col-4 mb-4">
+          <h2>{event.event_name}</h2>
+          <p>{event.event_description}</p>
+          <p>{event.event_location}</p>
+          <p>€{event.event_price}</p>
+          <button onClick={() => saveEventToProfile(event.id)}>Save Event</button>
+        </div>
+      ))}
+    </div>
+    </div>
   );
 }

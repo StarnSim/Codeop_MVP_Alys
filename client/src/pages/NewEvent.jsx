@@ -15,6 +15,7 @@ event_name: "",
   event_price: 0,
 });
 
+
 //Gets all hobbies so they appear in their dropdown menu
 useEffect(() => {getHobbies();}, []);
 
@@ -38,14 +39,15 @@ const getHobbies = () => {
         },
         body: JSON.stringify(input),
       });
-
       const data = await response.json();
-      console.log(data);
+
+            console.log(data);
 
     } catch (err) {
       console.log(err);
     }
   };
+
 
   function handleChange(event){
     const{value, name} = event.target;
@@ -56,8 +58,18 @@ const getHobbies = () => {
   };
 
   function handleSubmit(e){
-    e.preventDefault()
-    addEvent()
+    e.preventDefault();
+    addEvent();
+    // Clear the form fields
+    setInput({
+      event_name: "",
+      event_location: "",
+      event_description: "",
+      skill_level: "",
+      hobby_id: 0,
+      equip_needed: "",
+      event_price: 0,
+    });
   }
 
   return (
@@ -80,7 +92,8 @@ const getHobbies = () => {
           </div>
           <div>
            <label htmlFor="event_description"></label>
-           <span>Event Description</span> <textarea
+           <span>Event Description</span> 
+           <textarea
             name="event_description"
             id="event_description"
             type="text"
@@ -171,3 +184,30 @@ const getHobbies = () => {
     </div>
   )
 }
+
+
+// function handleSubmit(e){
+//   e.preventDefault()
+//   addEvent()
+// }
+
+
+// const [eventMessage, setEventMessage] = useState(""); 
+//   if (response.ok) {
+//     setEventMessage(`Your event has been created`);
+   
+//   } else {
+//     setEventMessage("Failed to create event");
+//   }
+// } catch (error) {
+//   console.error("Error:", error);
+// }
+// };
+
+  
+  //     console.log(data);
+
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };

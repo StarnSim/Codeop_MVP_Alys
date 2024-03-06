@@ -25,6 +25,7 @@ This full-stack MVP is a hobby-finding interactive app where the user can search
 - Run `npm install` in the project directory. This will install server-related dependencies such as `express`.
 - `cd client` and run `npm install`. This will install client dependencies (React).
 
+
 ### Database Prep
 
 - Access the MySQL interface in your terminal by running `mysql -u root -p`, and adding your password.
@@ -44,4 +45,7 @@ This full-stack MVP is a hobby-finding interactive app where the user can search
 ### Development
 
 - Run `npm start` in project directory to start the Express server on port 4000. It's recommended to use `nodemon` for automatic server restarts during development. If you don't have `nodemon` installed, you can install it globally using `npm install -g nodemon`.
+
 - In another terminal, navigate to the `client` directory (`cd client`) and run `npm run dev` to start the client in development mode with hot reloading in port 5173.
+
+

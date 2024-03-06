@@ -6,6 +6,9 @@ const cors = require('cors');
 
 var eventsRouter = require('./routes/events');
 var hobbiesRouter = require('./routes/hobbies');
+var authRouter = require('./routes/auth');
+var profileRouter = require('./routes/profile');
+
 
 var app = express();
 
@@ -16,6 +19,8 @@ app.use(cookieParser());
 
 app.use('/api/events', eventsRouter);
 app.use('/api/hobbies', hobbiesRouter);
+app.use('/api/auth', authRouter);
+app.use('/api/profile', profileRouter);
 
 app.use(cors());
 
